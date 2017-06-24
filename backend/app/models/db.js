@@ -17,13 +17,13 @@ mongoose.connect(dbURI);
 
 // on successful connection
 mongoose.connection.on('connected', function () {
-  console.log('Mongoose Default Connection open to Bikey DB');
+  console.log('Mongoose Default Connection open to Swachh DB');
   console.log(dbURI);
 });
 
 // on error while connection
 mongoose.connection.on('error', function () {
-  console.log('Mongoose Default connection has some problem connection to Bikey DB');
+  console.log('Mongoose Default connection has some problem connection to Swachh DB');
   console.log(dbURI);
   process.exit();
 });

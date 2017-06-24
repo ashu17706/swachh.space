@@ -20,6 +20,18 @@ router.get('/search', function (req, res) {
   });
 });
 
+router.get('/searchbydist', function (req, res) {
+  console.log('Get results by distance');
+  var promise = searchService.getDataByDistance([]);
+
+  promise.then(function (data) {
+    res.json({ error: false, message:'data Found', data:data });
+  }, function (error) {
+
+    res.json({ error: true, message: error });
+  });
+});
+
 //create new address
 router.post('/search', function (req, res) {
   console.log('Create new Record');

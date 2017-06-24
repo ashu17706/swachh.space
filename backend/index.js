@@ -9,11 +9,12 @@ var PORT = 3000;
 require('./app/models/db');
 
 var userapp = require('./app/routers/searchapp');
+var fetchapp = require('./app/routers/fetchapp');
 
 // bodyParser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/', [userapp]);
+app.use('/', [fetchapp, userapp]);
 
 var server = app.listen(PORT, function () {
   console.log('Swachh server started & running on port: ' + PORT);
