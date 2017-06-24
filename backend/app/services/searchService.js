@@ -74,10 +74,13 @@ function retrieveRecord(req) {
   return deferred.promise;
 }
 
-function getDataByDistance(req){
+function getDataByDistance(req) {
+
   var deferred = Q.defer();
   var query = Master.find({});
+
   query.limit(10);
+
   query.exec(function (err, docs) {
     if (err) {
       console.log('Error :' + err);
@@ -85,21 +88,20 @@ function getDataByDistance(req){
     } else {
       console.log('Success');
       var result = [];
-      forEach(docs, function(item, index) {
+      docs.forEach(function(item) {
         // Continue in one second.
         var  lat = item.cor.lat;
         var long = item.cor.long;
         var promise = fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=17.3850,78.4867&destinations='+lat+','+long+'&key=AIzaSyA1u0VxVmXdP1JA-YFlb07at4TWp56TZoU')
         .then((data) => {
-          return Q.defer(res.json());
-        })
+          return data.json();
+        });
         result.push(promise);
       });
 
       Q.all(result).then(function(res) {
-        console.log(res);
-        return deferred.resolve(res);
-      });
+          return deferred.resolve(res);
+        });
     }
   });
   return deferred.promise;
