@@ -1,0 +1,33 @@
+{
+  "name": "Swachh.space",
+  "version": "1.0.0",
+  "description": "App to search toilets",
+  "main": "index.js",
+  "scripts": {
+    "unit-test": "grunt mochaTest",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+"
+  },
+  "keywords": [
+  ],
+  "author": "",
+  "license": "ISC",
+  "homepage": "",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-jwt": "^3.3.0",
+    "jsonwebtoken": "^5.5.4",
+    "mongodb": "*",
+    "mongoose": "^4.4.4",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "chai-http": "^2.0.1"
+  }
+}
