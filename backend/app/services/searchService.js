@@ -2,7 +2,6 @@ var Q = require('q');
 var Helper = require('./../utils/helper');
 var Master = require('./../models/master');
 var fetch = require('node-fetch');
-var forEach = require('async-foreach').forEach;
 
 var searchService = {
   getAlldata: getAlldata,
@@ -88,20 +87,28 @@ function getDataByDistance(req) {
     } else {
       console.log('Success');
       var result = [];
-      docs.forEach(function(item) {
+      docs.forEach(function(item, i) {
         // Continue in one second.
-        var  lat = item.cor.lat;
+        var lat = item.cor.lat;
         var long = item.cor.long;
-        var promise = fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=17.3850,78.4867&destinations='+lat+','+long+'&key=AIzaSyA1u0VxVmXdP1JA-YFlb07at4TWp56TZoU')
+        var promise = fetch('https://maps.googleapis.com/maps/api/distancematrix/json?origins=17.3850,78.4867&destinations='+lat+','+long+'&key=AIzaSyA1u0VxVmXdP1JA-YFlb07at4TWp56TZoU')
         .then((data) => {
-          return data.json();
+          var returned = data.json();
+          //item.distance = returned.
+          return returned;
         });
         result.push(promise);
       });
 
       Q.all(result).then(function(res) {
-          return deferred.resolve(res);
+        docs.forEach(function(item, i) {
+          res[i].docs = item;
+          res[i].dvalue = res[i].rows[0].elements[0].distance.value;
+          res[i].dtext = res[i].rows[0].elements[0].distance.text;
+          delete res[i].rows;
         });
+        return deferred.resolve(res);
+      });
     }
   });
   return deferred.promise;
