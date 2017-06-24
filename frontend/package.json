@@ -1,0 +1,8 @@
+{
+  "name": "swachh.space",
+  "version": "1.0.0",
+  "description": "swachh.space PWA",
+  "main": "index.js",
+  "author": "ash17706@gmail.com",
+  "license": "MIT"
+}
