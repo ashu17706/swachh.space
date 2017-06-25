@@ -4,9 +4,9 @@ import './SearchBar.css';
 export default class SearchBar extends Component {
   render() {
     return (
-      <div className="SearchBar">
-        
-      </div>
+      <span className="SearchBar">
+        <input type="text" placeholder="Enter your location" />
+      </span>
     );
   }
 }

@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
-import SearchToolbar from './LandingPage/SearchToolbar';
-import SearchButton from './LandingPage/SearchButton';
-import SubmitToilet from './LandingPage/SubmitToilet';
+import LandingPage from './LandingPage';
+import ListingPage from './ListingPage';
 
 class App extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {page: 0};
+  }
+
+  changeScreen = () => {
+    this.setState({page: 1});
+  }
+  render = () => {
     return (
       <div className="App">
-        <SearchToolbar />
-        <SearchButton />
-        <SubmitToilet />
+        {
+          this.state.page === 0 ?
+            <LandingPage navigation={this.changeScreen} /> :
+            <ListingPage navigation={this.changeScreen} />
+        }
       </div>
     );
   }

@@ -1,0 +1,42 @@
+.Card {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 5px;
+  position: relative;
+}
+
+.Card > p {
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.Card > span {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: green;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 10px;
+  color: #fff;
+}
+
+
+.Card > .address {
+  width: 80%;
+  font-size: 11px;
+}
+
+
+.Card svg {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  transform:rotate(90deg);
+}

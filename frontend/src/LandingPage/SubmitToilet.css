@@ -1,0 +1,13 @@
+.SubmitToilet {
+  position: fixed;
+  bottom: 0px;
+  margin: auto;
+  width: 100%;
+}
+
+.SubmitToilet > p {
+  color: #fff;
+  text-decoration: underline;
+  margin: auto;
+  margin-bottom: 10px;
+}

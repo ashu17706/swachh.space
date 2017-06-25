@@ -1,0 +1,9 @@
+.Location {
+  box-sizing: border-box;
+  height: 44px;
+  width: 44px;
+  opacity: 0.2;
+  position: absolute;
+  right: -4px;
+  top: 16px;
+}
