@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 var Master = require('./../models/master');
 var searchService = require('./../services/searchService');
+var arraySort = require('array-sort');
 
 var router = express.Router();
 
@@ -22,10 +23,10 @@ router.get('/search', function (req, res) {
 
 router.get('/searchbydist', function (req, res) {
   console.log('Get results by distance');
-  var promise = searchService.getDataByDistance([]);
+  var promise = searchService.getDataByDistance(req.query);
 
   promise.then(function (data) {
-    res.json({ error: false, message:'data Found', data:data });
+    res.json({ error: false, message:'data Found', data:arraySort(data, 'dvalue')});
   }, function (error) {
 
     res.json({ error: true, message: error });

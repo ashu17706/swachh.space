@@ -2,7 +2,6 @@ var Q = require('q');
 var Helper = require('./../utils/helper');
 var Master = require('./../models/master');
 var fetch = require('node-fetch');
-var forEach = require('async-foreach').forEach;
 
 var searchService = {
   getAlldata: getAlldata,
@@ -77,10 +76,27 @@ function retrieveRecord(req) {
 function getDataByDistance(req) {
 
   var deferred = Q.defer();
-  var query = Master.find({});
 
-  query.limit(10);
+  console.log(req);
+  if(Object.keys(req).length === 0 && req.constructor === Object){
+    console.log('here');
+    deferred.resolve([]);
+    return deferred.promise;
+  }
+  var location = req.location;
 
+  if(typeof location != "undefined"){
+    var resp = fetch('https://maps.googleapis.com/maps/api/geocode/json?address='+location+'&key=AIzaSyC0EObQhjHFIPYrFuzGXEg9n7k6xz_7-XQ')
+    .then(function(res) {
+      return res.json();
+    });
+  }
+
+  var glat = typeof req.lat == "undefined" ? 17.3850 :  req.lat;
+  var glong = typeof req.long == "undefined" ? 78.4867 :  req.long;
+  console.log(glat);
+  console.log(glong);
+  var query = Master.find({location:new RegExp(location, 'i')});
   query.exec(function (err, docs) {
     if (err) {
       console.log('Error :' + err);
@@ -88,20 +104,30 @@ function getDataByDistance(req) {
     } else {
       console.log('Success');
       var result = [];
-      docs.forEach(function(item) {
+      docs.forEach(function(item, i) {
         // Continue in one second.
-        var  lat = item.cor.lat;
+        var lat = item.cor.lat;
         var long = item.cor.long;
-        var promise = fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=17.3850,78.4867&destinations='+lat+','+long+'&key=AIzaSyA1u0VxVmXdP1JA-YFlb07at4TWp56TZoU')
+        var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='+glat+','+glong+'&destinations='+lat+','+long+'&key=AIzaSyA1u0VxVmXdP1JA-YFlb07at4TWp56TZoU';
+        console.log(url);
+        var promise = fetch(url)
         .then((data) => {
-          return data.json();
+          var returned = data.json();
+          //item.distance = returned.
+          return returned;
         });
         result.push(promise);
       });
 
       Q.all(result).then(function(res) {
-          return deferred.resolve(res);
+        docs.forEach(function(item, i) {
+          res[i].docs = item;
+          res[i].dvalue = res[i].rows[0].elements[0].distance.value;
+          res[i].dtext = res[i].rows[0].elements[0].distance.text;
+          delete res[i].rows;
         });
+        return deferred.resolve(res);
+      });
     }
   });
   return deferred.promise;
