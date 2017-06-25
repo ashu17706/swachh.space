@@ -86,15 +86,16 @@ function getDataByDistance(req) {
   var location = req.location;
 
   if(typeof location != "undefined"){
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address='+location+'&key=AIzaSyC0EObQhjHFIPYrFuzGXEg9n7k6xz_7-XQ')
+    var resp = fetch('https://maps.googleapis.com/maps/api/geocode/json?address='+location+'&key=AIzaSyC0EObQhjHFIPYrFuzGXEg9n7k6xz_7-XQ')
     .then(function(res) {
-      console.log(res.json());
       return res.json();
     });
   }
 
   var glat = typeof req.lat == "undefined" ? 17.3850 :  req.lat;
   var glong = typeof req.long == "undefined" ? 78.4867 :  req.long;
+  console.log(glat);
+  console.log(glong);
   var query = Master.find({location:new RegExp(location, 'i')});
   query.exec(function (err, docs) {
     if (err) {
@@ -107,7 +108,9 @@ function getDataByDistance(req) {
         // Continue in one second.
         var lat = item.cor.lat;
         var long = item.cor.long;
-        var promise = fetch('https://maps.googleapis.com/maps/api/distancematrix/json?origins='+glat+','+glong+'&destinations='+lat+','+long+'&key=AIzaSyA1u0VxVmXdP1JA-YFlb07at4TWp56TZoU')
+        var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='+glat+','+glong+'&destinations='+lat+','+long+'&key=AIzaSyA1u0VxVmXdP1JA-YFlb07at4TWp56TZoU';
+        console.log(url);
+        var promise = fetch(url)
         .then((data) => {
           var returned = data.json();
           //item.distance = returned.
