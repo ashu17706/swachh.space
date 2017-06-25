@@ -5,7 +5,7 @@ export default class SearchBar extends Component {
   render() {
     return (
       <span className="SearchBar">
-        <input type="text" placeholder="Enter your location" />
+        <input type="text" placeholder={this.props.latitude ? this.props.latitude : "Enter your Locality" } />
       </span>
     );
   }

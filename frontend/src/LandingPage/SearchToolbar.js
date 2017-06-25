@@ -15,7 +15,7 @@ export default class SearchToolbar extends Component {
     fetch(`http://ec2-184-72-197-43.compute-1.amazonaws.com:3000/searchbydist?location=hyderabad&lat=17.4294396&long=78.3409519`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      console.log(this.props.coords);
       this.props.navigation();
     });
   }
@@ -24,7 +24,7 @@ export default class SearchToolbar extends Component {
     return (
       <div className="SearchToolbar">
         <SearchBar />
-        <Location updateLocation={this.updateLocation}/>
+        <Location updateLocation={this.updateLocation} />
       </div>
     );
   }

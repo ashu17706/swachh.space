@@ -1,0 +1,12 @@
+.brand {
+  position: relative;
+  font-size: 32px;
+  top: -10px;
+}
+.logo {
+  position: fixed;
+  top: 70px;
+  left: 40px;
+  height: 320px;
+  width: 320px;
+}
