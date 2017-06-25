@@ -9,7 +9,7 @@ var Master = require('./../models/master');
 //get all user list
 router.get('/fetch', function (req, res) {
   console.log('fetch google api');
-  var query = "hp petrol pump";
+  var query = "bus stands";
   var promise = fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=17.3850,78.4867&radius=50000&name='+query+'&key=AIzaSyC0EObQhjHFIPYrFuzGXEg9n7k6xz_7-XQ')
   .then(function(res) {
     var deferred = Q.defer();
