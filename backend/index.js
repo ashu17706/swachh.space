@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan')
 var PORT = 3000;
 
+var cors = require('cors')
+
 // DB and Schema settings
 require('./app/models/db');
 
@@ -16,6 +18,7 @@ var fetchapp = require('./app/routers/fetchapp');
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 app.use('/', [fetchapp, userapp]);
 
 var server = app.listen(PORT, function () {
