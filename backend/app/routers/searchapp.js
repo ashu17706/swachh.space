@@ -23,7 +23,7 @@ router.get('/search', function (req, res) {
 
 router.get('/searchbydist', function (req, res) {
   console.log('Get results by distance');
-  var promise = searchService.getDataByDistance([]);
+  var promise = searchService.getDataByDistance(req.query);
 
   promise.then(function (data) {
     res.json({ error: false, message:'data Found', data:arraySort(data, 'dvalue')});
