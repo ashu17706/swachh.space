@@ -3,6 +3,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var morgan = require('morgan')
 var PORT = 3000;
 
 // DB and Schema settings
@@ -12,6 +13,7 @@ var userapp = require('./app/routers/searchapp');
 var fetchapp = require('./app/routers/fetchapp');
 
 // bodyParser middleware
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', [fetchapp, userapp]);
