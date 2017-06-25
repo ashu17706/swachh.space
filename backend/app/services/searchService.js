@@ -95,6 +95,7 @@ function getDataByDistance(req) {
   var glat = typeof req.lat == "undefined" ? 17.3850 :  req.lat;
   var glong = typeof req.long == "undefined" ? 78.4867 :  req.long;
   var query = Master.find({location:new RegExp(location, 'i')});
+  query.limit(10);
   query.exec(function (err, docs) {
     if (err) {
       console.log('Error :' + err);
